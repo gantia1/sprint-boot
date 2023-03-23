@@ -1,9 +1,11 @@
 package spring.softgen.softlab.springboottutorial.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,7 +18,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    @Column(name = "create_date", insertable = false)
+    @Column(name = "create_date", insertable = false, updatable = false)
     private LocalDateTime createDate;
     private boolean active;
     @PrePersist
@@ -24,4 +26,7 @@ public class User {
         active = true;
         createDate = LocalDateTime.now();
     }
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 }

@@ -3,7 +3,9 @@ package spring.softgen.softlab.springboottutorial.controler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import spring.softgen.softlab.springboottutorial.entity.Post;
 import spring.softgen.softlab.springboottutorial.entity.User;
+import spring.softgen.softlab.springboottutorial.service.PostService;
 import spring.softgen.softlab.springboottutorial.service.UserService;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final PostService postService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -48,5 +52,10 @@ public class UserController {
     public ResponseEntity<User> deleteUser(@PathVariable int id) {
         userService.delete(id);
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public List<Post> getUserPosts(@PathVariable int id) {
+        return postService.getPostsByUserId(id);
     }
 }
