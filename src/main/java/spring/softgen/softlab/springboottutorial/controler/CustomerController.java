@@ -26,6 +26,11 @@ public class CustomerController {
         return customerService.getAll(searchParams);
     }
 
+    @GetMapping("/deleted")
+    public List<Customer> getDeleted() {
+        return customerService.getDeleted();
+    }
+
     @GetMapping("/{id}")
     public Customer getById(@PathVariable int id) {
         return customerService.getCustomer(id);

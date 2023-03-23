@@ -17,11 +17,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public List<Customer> getAll(CustomerSearchParams searchParams) {
-        return customerRepository.findAll();
+        return customerRepository.findNoDelete(false);
+    }
+
+    public List<Customer> getDeleted() {
+        return customerRepository.findNoDelete(true);
     }
 
     public Customer add(Customer customer) {
-        customer.setDeleted(false);
+//        customer.setDeleted(false);
+//        თუ ენტიტიში დაუწერ PrePersist-ს ჩასეტვა აღარაა საჭირო
         return customerRepository.save(customer);
     }
 

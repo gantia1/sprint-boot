@@ -20,4 +20,9 @@ public class Customer {
     @Column(name = "birth_date")
     private LocalDate birthDate;
     private Boolean deleted;
+
+    @PrePersist
+    private void prePersist() {
+        deleted = false;
+    }
 }
